@@ -1,0 +1,4 @@
+SITE : Grande Veillée EDAJC (5 décembre 2026)
+Fichiers : index.html (la page), poster.jpg (l'affiche), vercel.json (réglages).
+Pour modifier : ouvrez index.html et changez les lignes LIVE (lien du direct YouTube) et FORM_ENDPOINT (lien Formspree) en haut du script.
+Hébergement : déposez ces 3 fichiers sur GitHub puis importez le dépôt dans Vercel (guide dans la conversation).
