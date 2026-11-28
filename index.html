@@ -43,6 +43,7 @@ footer{padding:10px 18px 36px;font-size:16px;opacity:.9}
 <label for="p">Prénoms *</label><input id="p" type="text" placeholder="Vos prénoms" autocomplete="given-name">
 <label for="l">Lieu d’habitation (commune / quartier) *</label><input id="l" type="text" placeholder="Ex. Cocody, Angré">
 <label for="t">Numéro de téléphone *</label><input id="t" type="tel" placeholder="Votre numéro joignable" autocomplete="tel">
+<label for="s">Vous êtes *</label><select id="s"><option value="">Choisir une option</option><option>Membre du Ministère EDAJC</option><option>Invité(e)</option></select>
 <label for="m">Mode de participation *</label><select id="m"><option value="">Choisir une option</option><option>Participation physique au siège du Ministère EDAJC</option><option>Participation en ligne</option></select>
 <div class="err" id="e">Merci de remplir tous les champs.</div>
 <button class="btn" type="submit">Je confirme ma participation</button>
@@ -71,10 +72,10 @@ var a=[[Math.floor(d/864e5),"jours"],[Math.floor(d%864e5/36e5),"h"],[Math.floor(
 $("cd").innerHTML=a.map(function(x){return"<div><b>"+x[0]+"</b><span>"+x[1]+"</span></div>"}).join("")}
 tick();setInterval(tick,1000);
 $("f").addEventListener("submit",function(ev){ev.preventDefault();
-var n=$("n").value.trim(),p=$("p").value.trim(),l=$("l").value.trim(),t=$("t").value.trim(),m=$("m").value;
-if(!n||!p||!l||!m||t.replace(/\D/g,"").length<8){$("e").style.display="block";return}
+var n=$("n").value.trim(),p=$("p").value.trim(),l=$("l").value.trim(),t=$("t").value.trim(),m=$("m").value,st=$("s").value;
+if(!n||!p||!l||!m||!st||t.replace(/\D/g,"").length<8){$("e").style.display="block";return}
 $("e").style.display="none";
-var msg="Bonjour, je confirme ma participation à la Grande Veillée du samedi 5 décembre 2026.\nNom : "+n+"\nPrénoms : "+p+"\nLieu d’habitation : "+l+"\nTéléphone : "+t+"\nMode : "+m,u=WA+"?text="+encodeURIComponent(msg);
-if(FORM_ENDPOINT){var o={nom:n,prenoms:p,lieu:l,telephone:t,mode:m},g=/script\.google\.com/.test(FORM_ENDPOINT);fetch(FORM_ENDPOINT,g?{method:"POST",mode:"no-cors",body:JSON.stringify(o)}:{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(o)}).catch(function(){})}
+var msg="Bonjour, je confirme ma participation à la Grande Veillée du samedi 5 décembre 2026.\nNom : "+n+"\nPrénoms : "+p+"\nLieu d’habitation : "+l+"\nTéléphone : "+t+"\nStatut : "+st+"\nMode : "+m,u=WA+"?text="+encodeURIComponent(msg);
+if(FORM_ENDPOINT){var o={nom:n,prenoms:p,lieu:l,telephone:t,mode:m,statut:st},g=/script\.google\.com/.test(FORM_ENDPOINT);fetch(FORM_ENDPOINT,g?{method:"POST",mode:"no-cors",body:JSON.stringify(o)}:{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(o)}).catch(function(){})}
 $("wa").href=u;$("who").textContent=p;$("ok").style.display="block";window.open(u,"_blank")});
 </script></body></html>

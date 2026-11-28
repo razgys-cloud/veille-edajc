@@ -43,6 +43,7 @@ footer{padding:10px 18px 36px;font-size:16px;opacity:.9}
 <label for="p">First names *</label><input id="p" type="text" placeholder="Your first names" autocomplete="given-name">
 <label for="l">Place of residence (district / neighborhood) *</label><input id="l" type="text" placeholder="E.g. Cocody, Angré">
 <label for="t">Phone number *</label><input id="t" type="tel" placeholder="A number where we can reach you" autocomplete="tel">
+<label for="s">You are *</label><select id="s"><option value="">Choose an option</option><option>Member of the EDAJC Ministry</option><option>Guest</option></select>
 <label for="m">How will you attend? *</label><select id="m"><option value="">Choose an option</option><option>In person at the EDAJC Ministry headquarters</option><option>Online</option></select>
 <div class="err" id="e">Please fill in all fields.</div>
 <button class="btn" type="submit">I confirm my attendance</button>
@@ -71,10 +72,10 @@ var a=[[Math.floor(d/864e5),"days"],[Math.floor(d%864e5/36e5),"h"],[Math.floor(d
 $("cd").innerHTML=a.map(function(x){return"<div><b>"+x[0]+"</b><span>"+x[1]+"</span></div>"}).join("")}
 tick();setInterval(tick,1000);
 $("f").addEventListener("submit",function(ev){ev.preventDefault();
-var n=$("n").value.trim(),p=$("p").value.trim(),l=$("l").value.trim(),t=$("t").value.trim(),m=$("m").value;
-if(!n||!p||!l||!m||t.replace(/\D/g,"").length<8){$("e").style.display="block";return}
+var n=$("n").value.trim(),p=$("p").value.trim(),l=$("l").value.trim(),t=$("t").value.trim(),m=$("m").value,st=$("s").value;
+if(!n||!p||!l||!m||!st||t.replace(/\D/g,"").length<8){$("e").style.display="block";return}
 $("e").style.display="none";
-var msg="Hello, I confirm my attendance at the prayer vigil for healing and protection on Saturday 5 December 2026.\nLast name: "+n+"\nFirst names: "+p+"\nPlace of residence: "+l+"\nPhone: "+t+"\nAttendance: "+m,u=WA+"?text="+encodeURIComponent(msg);
-if(FORM_ENDPOINT){var o={nom:n,prenoms:p,lieu:l,telephone:t,mode:m},g=/script\.google\.com/.test(FORM_ENDPOINT);fetch(FORM_ENDPOINT,g?{method:"POST",mode:"no-cors",body:JSON.stringify(o)}:{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(o)}).catch(function(){})}
+var msg="Hello, I confirm my attendance at the prayer vigil for healing and protection on Saturday 5 December 2026.\nLast name: "+n+"\nFirst names: "+p+"\nPlace of residence: "+l+"\nPhone: "+t+"\nStatus: "+st+"\nAttendance: "+m,u=WA+"?text="+encodeURIComponent(msg);
+if(FORM_ENDPOINT){var o={nom:n,prenoms:p,lieu:l,telephone:t,mode:m,statut:(st=="Guest"?"Invité(e)":"Membre du Ministère EDAJC")},g=/script\.google\.com/.test(FORM_ENDPOINT);fetch(FORM_ENDPOINT,g?{method:"POST",mode:"no-cors",body:JSON.stringify(o)}:{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(o)}).catch(function(){})}
 $("wa").href=u;$("who").textContent=p;$("ok").style.display="block";window.open(u,"_blank")});
 </script></body></html>
